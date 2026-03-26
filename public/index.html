@@ -6,6 +6,16 @@
     <title>Локальный Мессенджер</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<!-- Панель со смайликами -->
+<div id="emojiPicker" class="emoji-picker" style="display: none;">
+    <div class="emoji-list">
+        <span>😊</span> <span>😂</span> <span>❤️</span> <span>😍</span>
+        <span>👍</span> <span>🔥</span> <span>🎉</span> <span>😢</span>
+        <span>😡</span> <span>😱</span> <span>🤔</span> <span>🥳</span>
+        <span>👋</span> <span>💪</span> <span>🙏</span> <span>💀</span>
+        <span>✨</span> <span>⭐</span> <span>⚡</span> <span>💯</span>
+    </div>
+</div>
 <body>
     <div class="container">
         <div class="sidebar">
@@ -58,6 +68,11 @@
             <video id="remoteVideo" autoplay></video>
         </div>
     </div>
+	<div class="message-input">
+    <button id="emojiBtn" class="emoji-btn">😊</button>
+    <textarea id="messageInput" placeholder="Введите сообщение..."></textarea>
+    <button id="sendBtn" class="send-btn">📨</button>
+</div>
     
     <input type="file" id="fileInput" style="display: none" accept="image/*">
     
