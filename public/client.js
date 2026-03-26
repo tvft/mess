@@ -122,6 +122,35 @@ function setupEventListeners() {
             e.preventDefault();
             sendMessage();
         }
+	function setupEventListeners() {
+    // ... существующий код ...
+    
+    // Добавьте эту часть:
+    document.getElementById('emojiBtn').onclick = () => {
+        const picker = document.getElementById('emojiPicker');
+        picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+    };
+    
+    // Закрываем панель при клике вне её
+    document.addEventListener('click', (e) => {
+        const picker = document.getElementById('emojiPicker');
+        const emojiBtn = document.getElementById('emojiBtn');
+        if (!picker.contains(e.target) && e.target !== emojiBtn) {
+            picker.style.display = 'none';
+        }
+    });
+    
+    // Добавляем смайлик в поле ввода при клике
+    const emojis = document.querySelectorAll('.emoji-list span');
+    emojis.forEach(emoji => {
+        emoji.onclick = () => {
+            const input = document.getElementById('messageInput');
+            input.value += emoji.textContent;
+            input.focus();
+            document.getElementById('emojiPicker').style.display = 'none';
+        };
+    });
+}
     };
     
     document.getElementById('fileBtn').onclick = () => {
