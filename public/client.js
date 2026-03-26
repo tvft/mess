@@ -122,20 +122,50 @@ function setupEventListeners() {
             e.preventDefault();
             sendMessage();
         }
-	function setupEventListeners() {
-    // ... существующий код ...
-    
-    // Добавьте эту часть:
-    document.getElementById('emojiBtn').onclick = () => {
-        const picker = document.getElementById('emojiPicker');
-        picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
     };
+    
+    document.getElementById('fileBtn').onclick = () => {
+        document.getElementById('fileInput').click();
+    };
+    
+    document.getElementById('fileInput').onchange = async (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            await uploadFile(file);
+        }
+    };
+    
+    document.getElementById('voiceBtn').onclick = () => {
+        document.getElementById('voiceModal').style.display = 'block';
+    };
+    
+    document.getElementById('callBtn').onclick = () => {
+        const target = prompt('Введите имя пользователя для звонка:');
+        if (target) startCall(target, false);
+    };
+    
+    document.getElementById('videoCallBtn').onclick = () => {
+        const target = prompt('Введите имя пользователя для видеозвонка:');
+        if (target) startCall(target, true);
+    };
+    
+    // ========== СМАЙЛИКИ ==========
+    const emojiBtn = document.getElementById('emojiBtn');
+    if (emojiBtn) {
+        emojiBtn.onclick = (e) => {
+            e.stopPropagation();
+            const picker = document.getElementById('emojiPicker');
+            if (picker) {
+                picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+            }
+        };
+    }
     
     // Закрываем панель при клике вне её
     document.addEventListener('click', (e) => {
         const picker = document.getElementById('emojiPicker');
         const emojiBtn = document.getElementById('emojiBtn');
-        if (!picker.contains(e.target) && e.target !== emojiBtn) {
+        if (picker && emojiBtn && !picker.contains(e.target) && e.target !== emojiBtn) {
             picker.style.display = 'none';
         }
     });
@@ -145,14 +175,18 @@ function setupEventListeners() {
     emojis.forEach(emoji => {
         emoji.onclick = () => {
             const input = document.getElementById('messageInput');
-            input.value += emoji.textContent;
-            input.focus();
-            document.getElementById('emojiPicker').style.display = 'none';
+            if (input) {
+                input.value += emoji.textContent;
+                input.focus();
+                const picker = document.getElementById('emojiPicker');
+                if (picker) picker.style.display = 'none';
+            }
         };
     });
-}
-    };
+    // ========== КОНЕЦ СМАЙЛИКОВ ==========
     
+    setupVoiceRecording();
+}    
     document.getElementById('fileBtn').onclick = () => {
         document.getElementById('fileInput').click();
     };
